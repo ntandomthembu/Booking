@@ -1,0 +1,32 @@
+﻿@model List<Booking.Models.Appointment>
+
+
+@{
+    ViewData["Title"] = "All Appointments";
+}
+
+<h2>All Appointments</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Appointment ID</th>
+            <th>Doctor</th>
+            <th>Patient</th>
+            <th>Service</th>
+           
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var appointment in Model)
+        {
+            <tr>
+                <td>@appointment.AppointmentID</td>
+                <td>@(appointment.Doctor != null ? appointment.Doctor.FirstName : "N/A")</td>
+                <td>@(appointment.Patient != null ? appointment.Patient.FirstName : "N/A")</td>
+                <td>@(appointment.Service != null ? appointment.Service.ServiceName : "N/A")</td>
+               
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,58 @@
+﻿@{
+    ViewData["Title"] = "CreateStep1";
+}
+
+@model Booking.Models.Appointment
+
+<h1>Create Appointment - Step 1</h1>
+
+<form asp-action="CreateStep1" method="post">
+    <!-- Input fields for Step 1 (name, doctor, service, date) -->
+    <div class="form-group">
+        <label asp-for="PatientID">Name</label>
+        <input asp-for="PatientID" class="form-control" />
+        <span asp-validation-for="PatientID" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="DoctorID">Doctor</label>
+        <select asp-for="DoctorID" class="form-control">
+            @foreach (var doctorItem in (IEnumerable<SelectListItem>)ViewData["DoctorID"])
+            {
+                <option value="@doctorItem.Value">@doctorItem.Text</option>
+            }
+        </select>
+        <span asp-validation-for="DoctorID" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="ServiceID">Service</label>
+        <select asp-for="ServiceID" class="form-control">
+            @foreach (var serviceItem in (IEnumerable<SelectListItem>)ViewData["ServiceID"])
+            {
+                <option value="@serviceItem.Value">@serviceItem.Text</option>
+            }
+        </select>
+        <span asp-validation-for="ServiceID" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="AppointmentDateTime">Select Date and Time Slot:</label>
+        <select asp-for="AppointmentDateTime" class="form-control">
+            <option value="">-- Select Date and Time Slot --</option>
+            @foreach (var timeSlot in (List<DateTime>)ViewData["AvailableTimeSlots"])
+            {
+                <option value="@timeSlot">@timeSlot.ToString("yyyy-MM-ddTHH:mm:ss")</option>
+            }
+        </select>
+    </div>
+
+    <pre>@Json.Serialize(ViewData["AvailableTimeSlots"])</pre>
+    <div class="form-group">
+        <label asp-for="Status">Status</label>
+        <input asp-for="Status" class="form-control" />
+        <span asp-validation-for="Status" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Next</button>
+</form>

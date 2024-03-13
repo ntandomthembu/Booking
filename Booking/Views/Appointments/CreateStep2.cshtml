@@ -1,0 +1,46 @@
+﻿@{
+    ViewData["Title"] = "CreateStep2";
+}
+
+@model Booking.Models.Appointment
+
+<h1>Create Appointment - Step 2</h1>
+
+<form asp-action="CreateStep2" method="post">
+    <!-- Hidden fields to persist Step 1 data -->
+    <input type="hidden" asp-for="PatientID" />
+    <input type="hidden" asp-for="DoctorID" />
+    <input type="hidden" asp-for="ServiceID" />
+    <input type="hidden" asp-for="AppointmentDateTime" />
+
+    <!-- Display available time slots -->
+    <h4>Available Time Slots</h4>
+    @if (ViewData["AvailableTimeSlots"] != null)
+    {
+        foreach (var timeSlot in (List<AvailableTimeSlots>)ViewData["AvailableTimeSlots"])
+        {
+            <p>@timeSlot.StartTime.ToString("hh:mm tt") - @timeSlot.EndTime.ToString("hh:mm tt")</p>
+        }
+    }
+    else
+    {
+        <p>No available time slots.</p>
+    }
+
+    <!-- Dropdown list for selecting a time slot -->
+ @*   <div class="form-group">
+        <label asp-for="SelectedTimeSlot">Select Time Slot</label>
+        <select asp-for="SelectedTimeSlot" class="form-control">
+            <option value="">-- Select Time Slot --</option>
+            @foreach (var timeSlot in (List<AvailableTimeSlots>)ViewData["AvailableTimeSlots"])
+            {
+                <option value="@timeSlot.StartTime">@timeSlot.StartTime.ToString("hh:mm tt")</option>
+            }
+        </select>
+        <span asp-validation-for="SelectedTimeSlot" class="text-danger"></span>
+    </div>*@
+
+    <!-- Other Step 2 fields go here -->
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>

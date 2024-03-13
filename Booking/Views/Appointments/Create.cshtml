@@ -1,0 +1,59 @@
+﻿@model Booking.Models.Appointment
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<body>
+    <h1>Book</h1>
+    <hr />
+
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="CreateStep1">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="PatientID" class="control-label">Name</label>
+                    <input asp-for="PatientID" class="form-control" />
+                    <span asp-validation-for="PatientID" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ServiceID" class="control-label">Select Service</label>
+                    <select asp-for="ServiceID" class="form-control" asp-items="ViewBag.ServiceID"></select>
+                </div>
+                <div class="form-group">
+                    <label asp-for="AppointmentDateTime" class="control-label">Select Date</label>
+                    <input asp-for="AppointmentDateTime" type="date" class="form-control" />
+                    <span asp-validation-for="AppointmentDateTime" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Next" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <!-- Display available time slots -->
+            <h4>Available Time Slots</h4>
+            @if (ViewData["AvailableTimeSlots"] != null)
+            {
+                foreach (var timeSlot in (List<AvailableTimeSlots>)ViewData["AvailableTimeSlots"])
+                {
+                    <p>@timeSlot.StartTime.ToString("hh:mm tt") - @timeSlot.EndTime.ToString("hh:mm tt")</p>
+                }
+            }
+            else
+            {
+                <p>No available time slots.</p>
+            }
+        </div>
+    </div>
+</body>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
